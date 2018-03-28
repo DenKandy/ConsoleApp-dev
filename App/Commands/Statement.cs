@@ -17,7 +17,7 @@ namespace App.Commands
         protected List<string> Blocks  { get; set; }
         public string String        { get; set; }
         /// <summary>
-        /// Create and parse
+        /// Create statement
         /// </summary>
         /// <param name="statement"></param>
         public Statement ( string statement )

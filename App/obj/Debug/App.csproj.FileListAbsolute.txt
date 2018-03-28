@@ -1,0 +1,7 @@
+D:\ProgLeng\cs\work\Really projects\App\App\bin\Debug\App.exe.config
+D:\ProgLeng\cs\work\Really projects\App\App\bin\Debug\App.exe
+D:\ProgLeng\cs\work\Really projects\App\App\bin\Debug\App.pdb
+D:\ProgLeng\cs\work\Really projects\App\App\obj\Debug\App.csprojResolveAssemblyReference.cache
+D:\ProgLeng\cs\work\Really projects\App\App\obj\Debug\App.csproj.CoreCompileInputs.cache
+D:\ProgLeng\cs\work\Really projects\App\App\obj\Debug\App.exe
+D:\ProgLeng\cs\work\Really projects\App\App\obj\Debug\App.pdb

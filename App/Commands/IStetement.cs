@@ -10,7 +10,7 @@ namespace App.Commands
     {
         string Command { get; set; }
 
-        List<char> Parameters { get; set; }
+        List<string> Parameters { get; set; }
 
         Dictionary<string, string []> Properties { get; set; }
 

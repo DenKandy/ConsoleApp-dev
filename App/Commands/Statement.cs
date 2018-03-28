@@ -4,18 +4,16 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using App.Exceptions;
 namespace App.Commands
 {
     class Statement : IStatement
     { 
         public string Command                           { get; set; }
-        public List<char> Parameters                    { get; set; }
+        public List<string> Parameters                    { get; set; }
         public List<string> Atributtes                  { get; set; }
         public Dictionary<string, string []> Properties { get; set; }
-
-        protected List<string> Blocks  { get; set; }
-        public string String        { get; set; }
+        public string String                            { get; set; }
         /// <summary>
         /// Create statement
         /// </summary>
@@ -24,55 +22,57 @@ namespace App.Commands
         {
             String = statement.Trim();
             Atributtes = new List<string> ();
-            Blocks = new List<string> ();
-            Parameters = new List<char> ();
+            Parameters = new List<string> ();
+            Properties = new Dictionary<string, string []> ();
         }
 
         public void Parse ()
         {
-            Command = String.Substring ( 0, String.IndexOf ( " " ) );
-            string str = String.Substring(String.IndexOf(" "));
             Regex regex;
             Match match;
+            //get command
+            Command = String.Substring ( 0, String.IndexOf ( " " ) );
             //get properties
             regex = new Regex(@"\s+('.+')\s+", RegexOptions.IgnoreCase );
             match = regex.Match ( String );
             if ( ! String.IsNullOrEmpty( match.Value ) )
             {
-                Blocks.Add ( match.Value );
                 ParseProperties ( match.Value );
             }
+            //get parameters
             regex = new Regex ( @"\s-\w", RegexOptions.IgnoreCase );
             foreach ( Match item in regex.Matches ( String ) )
             {
                 if ( !String.IsNullOrEmpty ( item.Value ) )
                 {
-                    Blocks.Add ( item.Value );
-                    ParseAttribute ( item.Value );
+                    Parameters.Add ( item.Value );
                 }
             }
+            //get attributes
             regex = new Regex ( @"\s--\w+" );
             foreach ( Match item in regex.Matches ( String ) )
             {
                 if ( !String.IsNullOrEmpty ( item.Value ) )
                 {
-                    Blocks.Add ( item.Value );
-                    ParseAttribute ( item.Value );
+                    Atributtes.Add ( item.Value );
                 }
             }
 
         }
-        void ParseAttribute( string attributes )
+        void ParseProperties ( string properties )
         {
-
-        }
-        void ParseProperties ( string attributes )
-        {
-
-        }
-        void ParseParameters ( string attributes )
-        {
-
+            string [] props = properties.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+            foreach ( var item in props )
+            {
+                if ( item.IndexOf(":") != -1 )
+                {
+                    Properties.Add ( item.Substring ( 0, item.IndexOf ( ":" ) ), item.Split ( new char [] { ',', ':' }, StringSplitOptions.RemoveEmptyEntries ).Skip ( 1 ).ToArray() );
+                }
+                else
+                {
+                    Properties.Add ( "null", item.Split ( new char [] { ',' }, StringSplitOptions.RemoveEmptyEntries ) );
+                }
+            }
         }
     }
 }

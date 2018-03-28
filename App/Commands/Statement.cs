@@ -70,6 +70,10 @@ namespace App.Commands
                 }
                 else
                 {
+                    if ( Properties.ContainsKey("null") )
+                    {
+                        throw new AppException ( "Command can't be contains two or more anonim properties", $"Use '{Command} --help' for get more info about command" );
+                    }
                     Properties.Add ( "null", item.Split ( new char [] { ',' }, StringSplitOptions.RemoveEmptyEntries ) );
                 }
             }

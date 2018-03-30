@@ -16,6 +16,7 @@ namespace App.Exceptions
         }
         public void EmergencyExit ()
         {
+            Program.Print ( ConsoleColor.Magenta, AppName, "" );
             Print ();
             Program.Print ( ConsoleColor.Yellow, "Please press any key to close..." );
             Console.ReadKey ();

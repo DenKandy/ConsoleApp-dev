@@ -24,18 +24,17 @@ namespace App
         {
             try
             {
-                Statement statement = new Statement(" help 'ggg: ffd, ferwf, frf; hherdg: grg , tdfb , tfgrg ;dff,gg,gt ' -F -g --pelp --PIDOR reqwegr 'rvrvrdv' ");
+                Statement statement = new Statement(" help / 'ggg: ffd, ferwf, frf; hherdg: grg , tdfb , tfgrg ;dff,gg,gt ' -F -g --pelp --PIDOR reqwegr 'rvrvrdv' ");
                 statement.Parse ();
+                throw new AppException ( "kk" );
             }
             catch ( FatalException err )
             {
-                //err.Print ();
                 err.EmergencyExit ();  
             }
             catch ( AppException err )
             {
                 err.Print ();
-
             }
             finally
             {

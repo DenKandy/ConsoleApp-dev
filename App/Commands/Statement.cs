@@ -14,6 +14,13 @@ namespace App.Commands
         public List<string> Atributtes                  { get; set; }
         public Dictionary<string, string []> Properties { get; set; }
         public string String                            { get; set; }
+
+        public const char TYPE_COMMAND = '/';
+        public const char TYPE_PROP_KEY = ':';
+        public const char TYPE_PROP_VALUE = ';';
+        public const char TYPE_PROP_DEL = ',';
+        public const char TYPE_PROP_KEY_DEF = '_';
+
         /// <summary>
         /// Create statement
         /// </summary>
@@ -31,6 +38,15 @@ namespace App.Commands
             Regex regex;
             Match match;
             //get command
+            regex = new Regex ( @"\s*\w+\s*/", RegexOptions.IgnoreCase );
+            match = regex.Match ( String );
+            if ( !String.IsNullOrEmpty ( match.Value ) )
+            {
+                Command = match.Value;
+            }else
+            {
+                throw new AppException ( $"Command can't be absent '{String}'", "Use 'help / --syntax' for get how it correct " );
+            }
             Command = String.Substring ( 0, String.IndexOf ( " " ) );
             //get properties
             regex = new Regex(@"\s+('.+')\s+", RegexOptions.IgnoreCase );
@@ -61,20 +77,20 @@ namespace App.Commands
         }
         void ParseProperties ( string properties )
         {
-            string [] props = properties.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+            string [] props = properties.Split(new char[] { TYPE_PROP_VALUE }, StringSplitOptions.RemoveEmptyEntries );
             foreach ( var item in props )
             {
-                if ( item.IndexOf(":") != -1 )
+                if ( item.IndexOf( TYPE_PROP_KEY ) != -1 )
                 {
-                    Properties.Add ( item.Substring ( 0, item.IndexOf ( ":" ) ), item.Split ( new char [] { ',', ':' }, StringSplitOptions.RemoveEmptyEntries ).Skip ( 1 ).ToArray() );
+                    Properties.Add ( item.Substring ( 0, item.IndexOf ( TYPE_PROP_KEY ) ), item.Split ( new char [] { TYPE_PROP_DEL, TYPE_PROP_KEY }, StringSplitOptions.RemoveEmptyEntries ).Skip ( 1 ).ToArray() );
                 }
                 else
                 {
-                    if ( Properties.ContainsKey("null") )
+                    if ( Properties.ContainsKey( TYPE_PROP_KEY_DEF.ToString() ) )
                     {
                         throw new AppException ( "Command can't be contains two or more anonim properties", $"Use '{Command} --help' for get more info about command" );
                     }
-                    Properties.Add ( "null", item.Split ( new char [] { ',' }, StringSplitOptions.RemoveEmptyEntries ) );
+                    Properties.Add ( TYPE_PROP_KEY_DEF.ToString (), item.Split ( new char [] { TYPE_PROP_DEL }, StringSplitOptions.RemoveEmptyEntries ) );
                 }
             }
         }

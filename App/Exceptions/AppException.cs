@@ -32,7 +32,6 @@ namespace App.Exceptions
         /// </summary>
         public void Print ()
         {
-            Program.Print ( color: ConsoleColor.Magenta,txt: AppName, sym: "" );
             Program.Print ( color: ConsoleColor.Red,    txt: AppMessage );
             Program.Print ( color: ConsoleColor.Green,  txt: Solution );
         }

@@ -1,0 +1,6 @@
+Name exception:   Fatal Error 
+Message:          kk 
+Exception:        App.Exceptions.FatalException: kk
+   в App.Program.Main(String[] args) в D:\ProgLeng\cs\work\Really projects\App\App\Program.cs:строка 31 
+Inner exception:   
+Date:             3/30/2018 10:35:36 PM

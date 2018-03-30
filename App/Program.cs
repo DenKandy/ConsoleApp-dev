@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.IO;
 using App.Exceptions;
 using App.Commands;
 
@@ -22,18 +23,22 @@ namespace App
 
         static void Main ( string [] args )
         {
+            AbsoluteAppPath = Directory.GetCurrentDirectory ().Substring ( 0, Directory.GetCurrentDirectory ().IndexOf ( "bin" ) );
             try
             {
-                Statement statement = new Statement(" help / 'ggg: ffd, ferwf, frf; hherdg: grg , tdfb , tfgrg ;dff,gg,gt ' -F -g --pelp --PIDOR reqwegr 'rvrvrdv' ");
+                Statement statement = new Statement(" help / --syntax");
                 statement.Parse ();
-                throw new AppException ( "kk" );
+                Print ( ConsoleColor.Cyan, "Test is successful" );
             }
             catch ( FatalException err )
             {
-                err.EmergencyExit ();  
+                err.WriteError ();
+                err.EmergencyExit ();
+                
             }
             catch ( AppException err )
             {
+                err.WriteLog ();
                 err.Print ();
             }
             finally

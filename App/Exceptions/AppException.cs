@@ -19,13 +19,21 @@ namespace App.Exceptions
             AppMessage = message;
             Solution = solution;
         }
-        public void Log ()
+        /// <summary>
+        /// Create directory 'log' if one is absent.
+        /// Write to files to path 'log/time-name.txt'
+        /// </summary>
+        public void WriteLog ()
         { 
-            Write ( Program.AbsoluteAppPath + "/log/" );
+            Write ( Program.AbsoluteAppPath + "log\\" );
         }
-        public void Error ()
+        /// <summary>
+        /// Create directory 'error' if one is absent.
+        /// Write to files to path 'error/time-name.txt'
+        /// </summary>
+        public void WriteError ()
         {
-            Write ( Program.AbsoluteAppPath + "/error/" );
+            Write ( Program.AbsoluteAppPath + "error\\" );
         }
         /// <summary>
         /// Print message about problem and its solution
@@ -36,7 +44,7 @@ namespace App.Exceptions
             Program.Print ( color: ConsoleColor.Green,  txt: Solution );
         }
         /// <summary>
-        /// Write error to log-err file
+        /// Create directory if one is absent and to create file also to write into its
         /// </summary>
         /// <param name="path">Path to file</param>
         void Write ( string path )
@@ -50,7 +58,7 @@ namespace App.Exceptions
                 $"Name exception:   {AppName} \n" +
                 $"Message:          {AppMessage} \n" +
                 $"Exception:        {ToString ()} \n" +
-                $"Inner exception:  {InnerException.ToString ()} \n" +
+                $"Inner exception:  {InnerException?.ToString ()} \n" +
                 $"Date:             {DateTime.Now.ToString ()}"
                 );
             writer.Close ();

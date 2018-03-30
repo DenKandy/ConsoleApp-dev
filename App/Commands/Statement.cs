@@ -32,7 +32,11 @@ namespace App.Commands
             Parameters = new List<string> ();
             Properties = new Dictionary<string, string []> ();
         }
-
+        /// <summary>
+        /// Parsing Statement.
+        /// Doesn't depend on case.
+        /// </summary>
+        /// <exception cref="AppException">Thrown when command is absent. She should be according template 'command /'. Also thrown when default properties more then one</exception>
         public void Parse ()
         {
             Regex regex;
@@ -45,7 +49,7 @@ namespace App.Commands
                 Command = match.Value;
             }else
             {
-                throw new AppException ( $"Command can't be absent '{String}'", "Use 'help / --syntax' for get how it correct " );
+                throw new AppException ( $"Command can't be absent", "Use 'help / --syntax' for get how it correct " );
             }
             Command = String.Substring ( 0, String.IndexOf ( " " ) );
             //get properties

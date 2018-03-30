@@ -14,6 +14,10 @@ namespace App.Exceptions
         {
             AppName = "Fatal Error";
         }
+        /// <summary>
+        /// Emergency complite work.
+        /// Print error message and to wait any pressing to key.
+        /// </summary>
         public void EmergencyExit ()
         {
             Program.Print ( ConsoleColor.Magenta, AppName, "" );
